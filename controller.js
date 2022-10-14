@@ -4,6 +4,7 @@ const {
   fetchReviews,
   fetchUsers,
   updateReview,
+  fetchComments,
 } = require("./model");
 
 const { checkIfCategoryExists } = require("./utils");
@@ -58,6 +59,17 @@ exports.getReviews = (req, res, next) => {
     });
   }
   fetchReviews(filter)
+    .then((data) => {
+      res.status(200).send(data);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+exports.getComments = (req, res, next) => {
+  const { review_id } = req.params;
+  fetchComments(review_id)
     .then((data) => {
       res.status(200).send(data);
     })
